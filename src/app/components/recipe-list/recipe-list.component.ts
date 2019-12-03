@@ -12,7 +12,12 @@ export class RecipeListComponent implements OnInit {
       'A test recipe',
       'This is simply a test',
       'https://www.skinnytaste.com/wp-content/uploads/2009/02/turkey-meatloaf-8.jpg'
-      )
+    ),
+    new Recipe(
+      'Another test recipe',
+      'This is simply a test',
+      'https://www.thecookierookie.com/wp-content/uploads/2019/08/pasta-pomodoro-recipe-3-of-7.jpg'
+    )
   ];
 
   constructor() { }

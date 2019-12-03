@@ -1,1 +1,17 @@
+button {
+  width: 20px;
+  background-color: rgba(149, 149, 149, 0.719);
+  font-size: 1rem;
+  border: 0;
+  outline: none;
+  margin-left: 12px;
+  border-radius: 100px;
+  height: 20px;
+  display: inline-block;
+  margin-top: 20px;
 
+  &:hover {
+    transform: translateY(-2px);
+    transition: .1s;
+  }
+}
