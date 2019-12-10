@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <div class="row">
       <div class="col">
-        <h1>Recipe Name</h1>
+        <h1>{{ recipe.name }}</h1>
         <div class="btn-group">
           <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -19,7 +19,16 @@
 </div>
 <div class="row">
   <div class="col-sm-12">
-    Description
+    <img
+      src="{{ recipe.imagePath }}"
+      alt="{{ recipe.name }}"
+      class="recipe-image rounded img-fluid"
+    >
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    {{ recipe.description }}
   </div>
 </div>
 <div class="row">
