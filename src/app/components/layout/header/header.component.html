@@ -12,12 +12,17 @@
           <li class="nav-item">
             <a class="nav-link" href="#" (click)="onSelect('shopping-list')">Shopping List</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
+          <li
+            class="nav-item dropdown"
+          >
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              appDropdown
+            >
               Manage
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <div class="dropdown-menu">
               <a class="dropdown-item" href="#">Save data</a>
               <a class="dropdown-item" href="#">Fetch data</a>
             </div>
