@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'rececipe-book';
+  showFeature = 'recipes';
+
+  onNavigate(feature: string) {
+    this.showFeature = feature;
+  }
 }

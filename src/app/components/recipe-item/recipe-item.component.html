@@ -1,0 +1,20 @@
+<li>
+  <a
+    href="#"
+    class="text-decoration-none text-dark"
+    (click)="onSelect(recipe)"
+  >
+    <div class="row">
+      <div class="col-8">
+        <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+        <p class="list-group-item-text">{{ recipe.description }}</p>
+      </div>
+      <div class="col-4">
+        <div
+          [ngStyle]="{'background-image': 'url(' + recipe.imagePath + ')'}"
+          class="bg"
+        ></div>
+      </div>
+    </div>
+  </a>
+</li>
