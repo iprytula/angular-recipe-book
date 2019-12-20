@@ -27,7 +27,7 @@ export class ShoppingEditComponent implements OnInit {
     const ingAmount: number = Number(this.amountInputRef.nativeElement.value);
 
     if (ingName.length > 0 && ingAmount > 0) {
-      this.shoppingService.addIngridient(new Ingredient(ingName, ingAmount));
+      this.shoppingService.addIngredient(new Ingredient(ingName, ingAmount));
       this.showErrorMessage = false;
     } else {
       this.showErrorMessage = true;

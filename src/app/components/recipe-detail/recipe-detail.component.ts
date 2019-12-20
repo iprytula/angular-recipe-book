@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { RecipesService } from '../../services/recipes.service';
+import { ShoppingService } from '../../services/shopping.service';
 
 import { Recipe } from '../../models/recipe.model';
 
@@ -11,7 +12,8 @@ import { Recipe } from '../../models/recipe.model';
 })
 export class RecipeDetailComponent implements OnInit {
   constructor(
-    private recipesService: RecipesService
+    private recipesService: RecipesService,
+    private shoppingService: ShoppingService
   ) { }
 
   recipe: Recipe;
@@ -20,6 +22,10 @@ export class RecipeDetailComponent implements OnInit {
     this.recipesService.onRecipeSelect.subscribe(recipe => {
       this.recipe = recipe;
     });
+  }
+
+  onAddToShoppingList() {
+    this.shoppingService.recipeToShoppingList(this.recipe);
   }
 
 }

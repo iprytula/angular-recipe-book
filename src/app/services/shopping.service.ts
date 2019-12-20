@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
 import { Ingredient } from '../models/ingredient.model';
+import { Recipe } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +11,38 @@ export class ShoppingService {
 
   ingridientsChanged = new EventEmitter<Ingredient[]>();
 
-  private ingredients: Ingredient[] = [
-    new Ingredient('Apples', 5),
-    new Ingredient('Tomatoes', 10)
-  ];
+  private ingredients: Ingredient[] = [];
 
-  getIgridients() {
+  getIgredients() {
     return [...this.ingredients];
   }
 
-  addIngridient(newIngridient: Ingredient) {
+  addIngredient(newIngridient: Ingredient) {
     this.ingredients.push(newIngridient);
     this.ingridientsChanged.emit([...this.ingredients]);
   }
+
+  recipeToShoppingList(recipe: Recipe) {
+
+    if (this.ingredients.length) {
+      this.ingredients.forEach((ing, i) => {
+        recipe.ingredients.forEach(nIng => {
+          if (ing.name.toLowerCase() === nIng.name.toLowerCase()) {
+            this.ingredients[i].amount = this.ingredients[i].amount + nIng.amount;
+          }
+
+          const existing = this.ingredients.find(cIng => {
+            return cIng.name.toLowerCase() === nIng.name.toLowerCase();
+          });
+
+          if (!existing) {
+            this.ingredients.push(nIng);
+          }
+        });
+      });
+    } else {
+      this.ingredients.push(...recipe.ingredients);
+    }
+  }
+
 }
