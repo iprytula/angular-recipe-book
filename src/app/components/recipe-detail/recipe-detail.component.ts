@@ -4,6 +4,7 @@ import { RecipesService } from '../../services/recipes.service';
 import { ShoppingService } from '../../services/shopping.service';
 
 import { Recipe } from '../../models/recipe.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -13,19 +14,31 @@ import { Recipe } from '../../models/recipe.model';
 export class RecipeDetailComponent implements OnInit {
   constructor(
     private recipesService: RecipesService,
-    private shoppingService: ShoppingService
+    private shoppingService: ShoppingService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   recipe: Recipe;
 
   ngOnInit() {
-    this.recipesService.onRecipeSelect.subscribe(recipe => {
-      this.recipe = recipe;
-    });
+    if (this.route.snapshot.params.name) {
+      this.recipe = this.recipesService.getRecipeByLink(this.route.snapshot.params.name);
+      this.route.params.subscribe(params => {
+        this.recipe = this.recipesService.getRecipeByLink(params.name);
+      });
+    } else {
+      this.recipe = this.recipesService.getRecipes()[0];
+    }
   }
 
   onAddToShoppingList() {
     this.shoppingService.recipeToShoppingList(this.recipe);
+  }
+
+  onEditRecipe() {
+    const linkName = this.recipe.name.toLowerCase().split(' ').join('-');
+    this.router.navigate(['recipes', linkName, 'edit']);
   }
 
 }

@@ -13,14 +13,12 @@ export class RecipeItemComponent implements OnInit {
   constructor(
     private recipesService: RecipesService
   ) { }
+  recipeName: string;
 
   @Input() recipe: Recipe;
 
   ngOnInit() {
-  }
-
-  onSelect(recipe: Recipe) {
-    this.recipesService.onRecipeSelect.emit(recipe);
+    this.recipeName = this.recipe.name.toLowerCase().split(' ').join('-');
   }
 
 }

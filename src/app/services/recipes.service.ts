@@ -28,7 +28,13 @@ export class RecipesService {
       ])
   ];
 
-  onRecipeSelect = new EventEmitter<Recipe>();
+  getRecipeByLink(link: string) {
+    const recipe = this.recipes.find(recipe => {
+      return recipe.name.toLowerCase().split(' ').join('-') === link;
+    });
+
+    return recipe;
+  }
 
   getRecipes() {
     return [...this.recipes];
