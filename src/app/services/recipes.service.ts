@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Recipe } from '../models/recipe.model';
 import { Ingredient } from '../models/ingredient.model';
@@ -29,8 +29,8 @@ export class RecipesService {
   ];
 
   getRecipeByLink(link: string) {
-    const recipe = this.recipes.find(recipe => {
-      return recipe.name.toLowerCase().split(' ').join('-') === link;
+    const recipe = this.recipes.find(rec => {
+      return rec.name.toLowerCase().split(' ').join('-') === link;
     });
 
     return recipe;
