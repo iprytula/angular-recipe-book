@@ -3,6 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Ingredient } from 'src/app/models/ingredient.model';
 
 import { ShoppingService } from '../../services/shopping.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -22,16 +23,8 @@ export class ShoppingEditComponent implements OnInit {
   ngOnInit() {
   }
 
-  onAddItem() {
-    const ingName: string = this.nameInputRef.nativeElement.value;
-    const ingAmount: number = Number(this.amountInputRef.nativeElement.value);
-
-    if (ingName.length > 0 && ingAmount > 0) {
-      this.shoppingService.addIngredient(new Ingredient(ingName, ingAmount));
-      this.showErrorMessage = false;
-    } else {
-      this.showErrorMessage = true;
-    }
+  onAddItem(f: NgForm) {
+    console.log(f);
   }
 
 }
