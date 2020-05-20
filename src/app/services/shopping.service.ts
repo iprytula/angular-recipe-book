@@ -11,6 +11,7 @@ export class ShoppingService {
   constructor() { }
 
   ingridientsChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>();
 
   private ingredients: Ingredient[] = [];
 
@@ -18,8 +19,22 @@ export class ShoppingService {
     return [...this.ingredients];
   }
 
+  getIngredient(index: number): Ingredient {
+    return this.ingredients[index];
+  }
+
   addIngredient(newIngridient: Ingredient): void {
     this.ingredients.push(newIngridient);
+    this.ingridientsChanged.next([...this.ingredients]);
+  }
+
+  editIngredient(index: number, editedIngredient: Ingredient) {
+    this.ingredients[index] = editedIngredient;
+    this.ingridientsChanged.next([...this.ingredients]);
+  }
+
+  deleteIngredient(index: number): void {
+    this.ingredients.splice(index, 1);
     this.ingridientsChanged.next([...this.ingredients]);
   }
 

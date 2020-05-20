@@ -47,12 +47,20 @@
         </div>
         <div class="col-sm-12">
           <button
-            class="btn btn-success mr-2"
+            [class]="editMode ? 'btn mr-2 btn-info' : 'btn mr-2 btn-success'"
             type="submit"
             [disabled]="!f.valid"
-          >Add</button>
-          <button class="btn btn-danger mr-2" type="button">Delete</button>
-          <button class="btn btn-primary mr-2" type="button">Clear</button>
+          >{{ editMode ? 'Edit' : 'Add' }}</button>
+          <button
+            class="btn btn-danger mr-2"
+            type="button"
+            (click)="onDelete()"
+          >Delete</button>
+          <button
+            class="btn btn-primary mr-2"
+            type="button"
+            (click)="onClear()"
+          >Clear</button>
         </div>
       </div>
     </form>
