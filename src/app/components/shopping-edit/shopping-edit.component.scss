@@ -5,3 +5,11 @@ label {
 .error-message {
   color: red;
 }
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+input.ng-invalid.ng-touched {
+  background-color: rgb(255, 215, 215);
+}

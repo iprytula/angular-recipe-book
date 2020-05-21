@@ -1,19 +1,5 @@
 button {
-  width: 22px;
-  height: 22px;
-  background-color: rgba(149, 149, 149, 0.719);
-  font-size: 1rem;
-  border: 0;
-  outline: none;
-  margin-left: 12px;
-  border-radius: 100px;
-  display: inline-block;
-  margin-top: -12px;
-
-  &:hover {
-    transform: translateY(-2px);
-    transition: .1s;
-  }
+  cursor: pointer;
 }
 
 h1 {
@@ -22,4 +8,8 @@ h1 {
 
 .recipe-image {
   max-height: 500px;
+}
+
+.dropdown-item {
+  cursor: pointer;
 }

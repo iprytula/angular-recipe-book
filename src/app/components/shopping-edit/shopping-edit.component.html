@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-sm-12">
     <form
-      (ngSubmit)="onAddItem()"
+      (ngSubmit)="onAddItem(f)"
+      #f="ngForm"
     >
       <div class="row">
         <div class="col-sm-5 form-group">
@@ -10,7 +11,9 @@
             type="text"
             id="name"
             class="form-control"
-            #nameInput
+            name="name"
+            ngModel
+            required
           >
         </div>
         <div class="col-sm-2 form-group">
@@ -20,8 +23,16 @@
             min="1"
             id="amount"
             class="form-control"
-            #amountInput
+            name="amount"
+            ngModel
+            required
+            pattern="^[1-9]+[0-9]*$"
           >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p class="form-text text-danger" *ngIf="!f.valid && f.touched">Fields above are required</p>
         </div>
       </div>
       <div class="row">
@@ -35,9 +46,22 @@
           </div>
         </div>
         <div class="col-sm-12">
-          <button class="btn btn-success mr-2" type="submit">Add</button>
-          <button class="btn btn-danger mr-2" type="button">Delete</button>
-          <button class="btn btn-primary mr-2" type="button">Clear</button>
+          <button
+            [class]="editMode ? 'btn mr-2 btn-info' : 'btn mr-2 btn-success'"
+            type="submit"
+            [disabled]="!f.valid"
+          >{{ editMode ? 'Edit' : 'Add' }}</button>
+          <button
+            class="btn btn-danger mr-2"
+            type="button"
+            (click)="onDelete()"
+            *ngIf="editMode"
+          >Delete</button>
+          <button
+            class="btn btn-primary mr-2"
+            type="button"
+            (click)="onClear()"
+          >Clear</button>
         </div>
       </div>
     </form>

@@ -4,3 +4,16 @@
   background-size: cover;
   background-position: center;
 }
+
+.active {
+  background-color: #138496;
+
+  a {
+    color: #fff !important;
+  }
+}
+
+li {
+  margin: -0.75rem -1.25rem;
+  padding: .75rem 1.25rem;;
+}

@@ -1,61 +1,42 @@
-<ng-container *ngIf="recipe; else selectRecipeMessage">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="row">
-        <div class="col">
-          <h1>{{ recipe.name }}</h1>
-          <div class="btn-group">
-            <button
-              type="button"
-              class="dropdown-toggle"
-              appDropdown
-            >
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#" (click)="onAddToShoppingList()">To Shopping List</a>
-              <a class="dropdown-item" href="#">Edit Recipe</a>
-              <a class="dropdown-item" href="#">Delete Recipe</a>
-            </div>
-          </div>
+<div class="row">
+  <div class="col-sm-12">
+    <img src="{{ recipe.imagePath }}" alt="{{ recipe.name }}" class="recipe-image rounded img-fluid">
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col">
+        <h1>{{ recipe.name }}</h1>
+        <br>
+        <button type="button" appDropdown class="btn btn-info mb-2">
+          Manage recipe
+          <svg class="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu ml-3">
+          <li class="dropdown-item" (click)="onAddToShoppingList()">To Shopping List</li>
+          <li class="dropdown-item" (click)="onEditRecipe()">Edit Recipe</li>
+          <li class="dropdown-item">Delete Recipe</li>
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <img
-        src="{{ recipe.imagePath }}"
-        alt="{{ recipe.name }}"
-        class="recipe-image rounded img-fluid"
-      >
-    </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 mt-3">
+    <p class="description">
+      {{ recipe.description }}
+    </p>
   </div>
-  <div class="row">
-    <div class="col-sm-12 mt-3">
-      <p class="description">
-        {{ recipe.description }}
-      </p>
-    </div>
+</div>
+<div class="row mb-3">
+  <div class="col-sm-12">
+    <ul class="list-group">
+      <li *ngFor="let ingredient of recipe.ingredients" class="list-group-item">
+        {{ ingredient.name }} ({{ ingredient.amount }})
+      </li>
+    </ul>
   </div>
-  <div class="row mb-3">
-    <div class="col-sm-12">
-      <ul class="list-group">
-        <li
-          *ngFor="let ingredient of recipe.ingredients"
-          class="list-group-item"
-        >
-          {{ ingredient.name }} ({{ ingredient.amount }})
-        </li>
-      </ul>
-    </div>
-  </div>
-</ng-container>
-<ng-template #selectRecipeMessage>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="alert alert-primary">
-        Please select a recipe
-      </div>
-    </div>
-  </div>
-</ng-template>
+</div>

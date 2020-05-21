@@ -1,7 +1,8 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Ingredient } from '../models/ingredient.model';
 import { Recipe } from '../models/recipe.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +10,35 @@ import { Recipe } from '../models/recipe.model';
 export class ShoppingService {
   constructor() { }
 
-  ingridientsChanged = new EventEmitter<Ingredient[]>();
+  ingridientsChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>();
 
   private ingredients: Ingredient[] = [];
 
-  getIgredients() {
+  getIgredients(): Ingredient[] {
     return [...this.ingredients];
   }
 
-  addIngredient(newIngridient: Ingredient) {
-    this.ingredients.push(newIngridient);
-    this.ingridientsChanged.emit([...this.ingredients]);
+  getIngredient(index: number): Ingredient {
+    return this.ingredients[index];
   }
 
-  recipeToShoppingList(recipe: Recipe) {
+  addIngredient(newIngridient: Ingredient): void {
+    this.ingredients.push(newIngridient);
+    this.ingridientsChanged.next([...this.ingredients]);
+  }
+
+  editIngredient(index: number, editedIngredient: Ingredient) {
+    this.ingredients[index] = editedIngredient;
+    this.ingridientsChanged.next([...this.ingredients]);
+  }
+
+  deleteIngredient(index: number): void {
+    this.ingredients.splice(index, 1);
+    this.ingridientsChanged.next([...this.ingredients]);
+  }
+
+  recipeToShoppingList(recipe: Recipe): void {
 
     if (this.ingredients.length) {
       this.ingredients.forEach((ing, i) => {
@@ -42,6 +58,7 @@ export class ShoppingService {
       });
     } else {
       this.ingredients.push(...recipe.ingredients);
+      this.ingridientsChanged.next([...this.ingredients]);
     }
   }
 
