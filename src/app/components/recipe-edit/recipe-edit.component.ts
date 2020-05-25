@@ -20,9 +20,11 @@ export class RecipeEditComponent implements OnInit {
 
   recipe: Recipe;
   recipeForm: FormGroup;
+  editMode = false;
 
   ngOnInit() {
     if (this.route.snapshot.params['index']) {
+      this.editMode = true;
       const index = this.route.snapshot.params['index'];
 
       this.recipe = this.recipesService.getRecipe(index);
@@ -34,18 +36,31 @@ export class RecipeEditComponent implements OnInit {
   }
 
   private initForm() {
-    const recipeName = this.recipe.name;
-    const recipeImg = this.recipe.imagePath;
-    const recipeDesc = this.recipe.description;
+    let recipeName = null;
+    let recipeImg = null;
+    let recipeDesc = null;
+
+    if (this.editMode) {
+      recipeName = this.recipe.name;
+      recipeImg = this.recipe.imagePath;
+      recipeDesc = this.recipe.description;
+    }
     const ingredients = new FormArray([]);
 
-    if (this.recipe.ingredients) {
-      for (let ingredient of this.recipe.ingredients) {
-        ingredients.push(new FormGroup({
-          'name': new FormControl(ingredient.name),
-          'amount': new FormControl(ingredient.amount)
-        }));
+    if (this.editMode) {
+      if (this.recipe.ingredients) {
+        for (let ingredient of this.recipe.ingredients) {
+          ingredients.push(new FormGroup({
+            'name': new FormControl(ingredient.name),
+            'amount': new FormControl(ingredient.amount)
+          }));
+        }
       }
+    } else {
+      ingredients.push(new FormGroup({
+        'name': new FormControl(null),
+        'amount': new FormControl(null)
+      }));
     }
 
     this.recipeForm = new FormGroup({
@@ -66,6 +81,7 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit() {
     console.log(this.recipeForm);
+    this.editMode = false;
   }
 
   get controls() { // a getter!
