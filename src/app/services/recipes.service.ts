@@ -28,12 +28,8 @@ export class RecipesService {
       ])
   ];
 
-  getRecipeByLink(link: string) {
-    const recipe = this.recipes.find(rec => {
-      return rec.name.toLowerCase().split(' ').join('-') === link;
-    });
-
-    return recipe;
+  getRecipe(index: number) {
+    return this.recipes[index];
   }
 
   getRecipes() {

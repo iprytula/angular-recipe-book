@@ -22,10 +22,12 @@ export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
 
   ngOnInit() {
-    if (this.route.snapshot.params.name) {
-      this.recipe = this.recipesService.getRecipeByLink(this.route.snapshot.params.name);
+    if (this.route.snapshot.params['index']) {
+      const index = this.route.snapshot.params['index'];
+
+      this.recipe = this.recipesService.getRecipe(index);
       this.route.params.subscribe(params => {
-        this.recipe = this.recipesService.getRecipeByLink(params.name);
+        this.recipe = this.recipesService.getRecipe(params['index']);
         this.initForm();
       });
     }

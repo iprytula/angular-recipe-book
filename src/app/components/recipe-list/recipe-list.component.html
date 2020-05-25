@@ -11,6 +11,7 @@
       <app-recipe-item
         *ngFor="let recipe of recipes; let i=index"
         [recipe]="recipe"
+        [index]="i"
         class="list-group-item"
       ></app-recipe-item>
     </ul>
