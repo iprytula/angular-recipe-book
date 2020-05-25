@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { Recipe } from '../models/recipe.model';
 import { Ingredient } from '../models/ingredient.model';
@@ -8,6 +9,8 @@ import { Ingredient } from '../models/ingredient.model';
 })
 export class RecipesService {
   constructor() { }
+
+  recipesChanged = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -28,15 +31,21 @@ export class RecipesService {
       ])
   ];
 
-  getRecipeByLink(link: string) {
-    const recipe = this.recipes.find(rec => {
-      return rec.name.toLowerCase().split(' ').join('-') === link;
-    });
-
-    return recipe;
+  getRecipe(index: number) {
+    return this.recipes[index];
   }
 
   getRecipes() {
     return [...this.recipes];
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next([ ...this.recipes ]);
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next([ ...this.recipes ]);
   }
 }

@@ -22,13 +22,14 @@ export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
 
   ngOnInit() {
-    if (this.route.snapshot.params.name) {
-      this.recipe = this.recipesService.getRecipeByLink(this.route.snapshot.params.name);
+    if (this.route.snapshot.params['index']) {
+      const index = this.route.snapshot.params['index'];
+      this.recipe = this.recipesService.getRecipe(index)
       this.route.params.subscribe(params => {
-        this.recipe = this.recipesService.getRecipeByLink(params.name);
+        this.recipe = this.recipesService.getRecipe(params['index']);
       });
     } else {
-      this.recipe = this.recipesService.getRecipes()[0];
+      this.recipe = this.recipesService.getRecipe(0);
     }
   }
 
@@ -37,8 +38,8 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onEditRecipe() {
-    const linkName = this.recipe.name.toLowerCase().split(' ').join('-');
-    this.router.navigate(['recipes', linkName, 'edit']);
+    const index = this.route.snapshot.params['index'];
+    this.router.navigate(['recipes', index, 'edit']);
   }
 
 }
