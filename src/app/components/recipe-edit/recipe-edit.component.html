@@ -31,7 +31,13 @@
           id="imagePath"
           formControlName="imagePath"
           class="form-control"
+          #imgPath
         />
+      </div>
+      <div class="row">
+        <div class="col">
+          <img [src]="imgPath.value" class="img-fluid mb-2">
+        </div>
       </div>
       <div class="form-group">
         <label for="description">Description</label>
