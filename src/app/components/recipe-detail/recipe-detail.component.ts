@@ -20,16 +20,19 @@ export class RecipeDetailComponent implements OnInit {
   ) { }
 
   recipe: Recipe;
+  recipeIndex: number;
 
   ngOnInit() {
     if (this.route.snapshot.params['index']) {
-      const index = this.route.snapshot.params['index'];
-      this.recipe = this.recipesService.getRecipe(index)
+      this.recipeIndex = this.route.snapshot.params['index'];
+      this.recipe = this.recipesService.getRecipe(this.recipeIndex);
       this.route.params.subscribe(params => {
         this.recipe = this.recipesService.getRecipe(params['index']);
+        this.recipeIndex = params['index'];
       });
     } else {
       this.recipe = this.recipesService.getRecipe(0);
+      this.recipeIndex = 0;
     }
   }
 
@@ -40,6 +43,11 @@ export class RecipeDetailComponent implements OnInit {
   onEditRecipe() {
     const index = this.route.snapshot.params['index'];
     this.router.navigate(['recipes', index, 'edit']);
+  }
+
+  onDeleteREcipe() {
+    this.recipesService.deleteRecipe(this.recipeIndex);
+    this.router.navigate(['/recipes', this.recipeIndex - 1])
   }
 
 }
