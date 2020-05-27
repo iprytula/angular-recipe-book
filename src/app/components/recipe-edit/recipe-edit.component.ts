@@ -21,17 +21,19 @@ export class RecipeEditComponent implements OnInit {
   recipe: Recipe;
   recipeForm: FormGroup;
   editMode = false;
-  editedRecipeIndex: number;
+  recipeIndex: number;
 
   ngOnInit() {
     if (this.route.snapshot.params['index']) {
       this.editMode = true;
-      this.editedRecipeIndex = this.route.snapshot.params['index'];
+      this.recipeIndex = this.route.snapshot.params['index'];
 
-      this.recipe = this.recipesService.getRecipe(this.editedRecipeIndex);
+      this.recipe = this.recipesService.getRecipe(this.recipeIndex);
       this.route.params.subscribe(params => {
         this.recipe = this.recipesService.getRecipe(params['index']);
       });
+    } else {
+      this.recipeIndex = this.recipesService.getRecipes().length;
     }
     this.initForm();
   }
@@ -92,17 +94,17 @@ export class RecipeEditComponent implements OnInit {
     // );
 
     if (this.editMode) {
-      this.recipesService.updateRecipe(this.editedRecipeIndex, this.recipeForm.value);
+      this.recipesService.updateRecipe(this.recipeIndex, this.recipeForm.value);
       this.editMode = false;
     } else {
       this.recipesService.addRecipe(this.recipeForm.value);
     }
-    this.router.navigate(['/recipes', this.editedRecipeIndex]);
+    this.router.navigate(['/recipes', this.recipeIndex]);
   }
 
   onCancel() {
     this.editMode = this.editMode ? false : this.editMode;
-    this.router.navigate(['/recipes', this.editedRecipeIndex]);
+    this.router.navigate(['/recipes', this.recipeIndex]);
   }
 
 }
