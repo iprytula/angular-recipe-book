@@ -1,6 +1,18 @@
 <div class="row">
   <div class="col-md-6 offset-md-3">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div *ngIf="error.length !== 0" class="alert alert-danger">
+      <p>{{ error }}</p>
+    </div>
+    <div
+      *ngIf="isLoading"
+      [ngStyle]="{
+        textAlign: 'center',
+        paddingTop: '60px'
+      }"
+      >
+      <app-spinner></app-spinner>
+    </div>
+    <form *ngIf="!isLoading" (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
         <label for="email">E-Mail</label>
         <input

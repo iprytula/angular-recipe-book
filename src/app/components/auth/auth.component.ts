@@ -9,20 +9,38 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
-  isLoginMode = true;
 
   constructor(
     private authService: AuthService
   ) { }
 
+  isLoginMode = true;
+  isLoading = false;
+  error: string = '';
+
   ngOnInit() {
   }
 
   onSubmit(f: NgForm) {
-    if (!this.isLoginMode) {
-      this.authService.signUp(f.value.email, f.value.password)
-      .subscribe(respond => {
-        console.log(respond);
+    if (!f.valid)
+      return;
+
+    this.isLoading = true;
+
+    const { email, password } = f.value;
+    if (this.isLoginMode) {
+
+    } else {
+      this.authService.signUp(email, password)
+      .subscribe(responseData => {
+        console.log(responseData);
+
+        this.isLoading = false;
+      },
+      errorMessage => {
+        console.log(errorMessage);
+
+        this.isLoading = false;
       })
     }
 

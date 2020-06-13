@@ -11,12 +11,13 @@ import { RecipesComponent } from './components/recipes/recipes.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
 import { RecipeItemComponent } from './components/recipe-item/recipe-item.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './components/shopping-edit/shopping-edit.component';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { RecipeEditComponent } from './components/recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './components/recipe-start/recipe-start.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { SpinnerComponent } from './components/layout/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AuthComponent } from './components/auth/auth.component';
     DropdownDirective,
     RecipeEditComponent,
     RecipeStartComponent,
-    AuthComponent
+    AuthComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
