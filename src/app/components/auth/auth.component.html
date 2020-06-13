@@ -9,6 +9,8 @@
           class="form-control"
           name="email"
           ngModel
+          required
+          email
         >
       </div>
       <div class="form-group">
@@ -19,11 +21,33 @@
           class="form-control"
           name="password"
           ngModel
+          required
+          minlength="6"
         >
       </div>
+      <!-- <div *ngIf="!isLoginMode" class="form-group">
+        <label for="repeatedPassword">Repeat Password</label>
+        <input
+          type="password"
+          id="repeatedPassword"
+          class="form-control"
+          name="repeatedPassword"
+          ngModel
+          required
+          minlength="6"
+        >
+      </div> -->
       <div>
-        <button type="button" class="btn btn-primary mr-3">Sign Up</button>
-        <button type="button" class="btn btn-info">Switch to LogIn</button>
+        <button
+          type="submit"
+          class="btn btn-primary mr-3"
+          [disabled]="!f.valid"
+        >{{ isLoginMode ? 'LogIn' : 'SignUp' }}</button>
+        <button
+          type="button"
+          class="btn btn-info"
+          (click)="onSwitchMode()"
+        >Switch to {{ isLoginMode ? 'SignUp' : 'LogIn' }}</button>
       </div>
     </form>
   </div>
