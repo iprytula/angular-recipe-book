@@ -31,7 +31,10 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -124,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "rececipe-book"
+    }
+  },
+  "defaultProject": "rececipe-book",
+  "cli": {
+    "analytics": "e0949d9e-4a7a-445a-a20e-cc16f9e988fd"
+  }
 }

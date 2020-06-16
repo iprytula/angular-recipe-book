@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError, Subject } from 'rxjs';
+
+import { User } from '../models/user.model';
 
 export interface AuthResponseData {
   idToken: string,
@@ -22,28 +24,33 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  private apiKey = 'AIzaSyCuWJvEJ6Q1d5N8h8S9XQsoo1WgdLiE6ww'
+  private _apiKey = 'AIzaSyCuWJvEJ6Q1d5N8h8S9XQsoo1WgdLiE6ww';
+  user = new Subject<User>();
 
   signUp(email, password) {
     return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`,
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this._apiKey}`,
       {
         email: email,
         password: password,
         returnSecureToken: true
       }
-    ).pipe(catchError(errorRes => catchError(this.handleError)))
+    ).pipe(catchError(this.handleError), tap(resData => {
+      this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
+    }));
   }
 
   logIn(email: string, password: string) {
     return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`,
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this._apiKey}`,
       {
         email: email,
         password: password,
         returnSecureToken: true
       }
-    ).pipe(catchError(this.handleError));
+    ).pipe(catchError(this.handleError), tap(resData => {
+      this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
+    }));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -67,6 +74,12 @@ export class AuthService {
 
       return throwError(errorMessage);
     }
+  }
+
+  private handleAuthentication(email: string, id: string, token: string, expiresIn: number) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, id, token, expirationDate);
+    this.user.next(user);
   }
 
 }
