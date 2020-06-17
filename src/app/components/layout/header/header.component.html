@@ -6,16 +6,13 @@
           class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto mr-3">
-          <li class="nav-item" routerLinkActive="active">
+          <li class="nav-item" routerLinkActive="active" *ngIf="isAuthenticated">
             <a class="nav-link" [routerLink]="['/recipes']">Recipes</a>
           </li>
           <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" [routerLink]="['/shopping-list']">Shopping List</a>
           </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" [routerLink]="['/auth']">Authenticate</a>
-          </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" *ngIf="isAuthenticated">
             <a
               class="nav-link dropdown-toggle"
               appDropdown
@@ -32,6 +29,10 @@
                 (click)="onFetchData()"
               >Fetch data</a>
             </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer;" *ngIf="isAuthenticated" (click)="onLogOut()">LogOut</a>
+            <a class="nav-link" [routerLink]="['/auth']" *ngIf="!isAuthenticated">Authenticate</a>
           </li>
         </ul>
       </div>

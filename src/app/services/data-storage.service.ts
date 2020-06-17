@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 
 import { RecipesService } from './recipes.service';
 import { Recipe } from 'src/app/models/recipe.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +14,25 @@ export class DataStorageService {
 
   constructor(
     private http: HttpClient,
-    private recipesService: RecipesService
+    private recipesService: RecipesService,
+    private authService: AuthService
   ) { }
 
   storeRecipes() {
+    if (!this.authService.user || !this.authService.user.token)
+      return;
+
     const recipes = this.recipesService.getRecipes();
-    this.http.put(`${this.dbUrl}/recipes.json`, recipes).subscribe(response => {});
+    this.http.put(`${this.dbUrl}/recipes.json?auth=${this.authService.user.token}`, recipes).subscribe();
   }
 
   fetchRecipes() {
-    return this.http.get<Recipe[]>(`${this.dbUrl}/recipes.json`)
+    if (!this.authService.user || !this.authService.user.token)
+      return;
+
+    return this.http.get<Recipe[]>(`${this.dbUrl}/recipes.json?auth=${this.authService.user.token}`)
     .pipe(tap(recipes => {
-      this.recipesService.setRecipes(recipes)
+      this.recipesService.setRecipes(recipes);
     }))
   }
 

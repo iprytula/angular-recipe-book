@@ -25,7 +25,8 @@ export class AuthService {
   ) { }
 
   private _apiKey = 'AIzaSyCuWJvEJ6Q1d5N8h8S9XQsoo1WgdLiE6ww';
-  user = new Subject<User>();
+  user: User = null;
+  userSubj = new Subject<User>();
 
   signUp(email, password) {
     return this.http.post<AuthResponseData>(
@@ -53,6 +54,11 @@ export class AuthService {
     }));
   }
 
+  logOut() {
+    this.user = null;
+    this.userSubj.next(this.user);
+  }
+
   private handleError(errorRes: HttpErrorResponse) {
     {
       let errorMessage = 'An unknown error occured!';
@@ -78,8 +84,8 @@ export class AuthService {
 
   private handleAuthentication(email: string, id: string, token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, id, token, expirationDate);
-    this.user.next(user);
+    this.user = new User(email, id, token, expirationDate);
+    this.userSubj.next(this.user);
   }
 
 }
