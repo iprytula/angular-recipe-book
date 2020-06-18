@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private userSub: Subscription;
   isAuthenticated = false;
+  private currentRoute: string = null;
 
   ngOnInit(): void {
     this.userSub = this.authService.userSubj.subscribe((user: User) => {
@@ -29,11 +30,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSaveData() {
-    this.dataStorageService.storeRecipes();
+    this.dataStorageService.storeRecipes().subscribe();
+    this.dataStorageService.storeShoppingList().subscribe();
   }
 
   onFetchData() {
     this.dataStorageService.fetchRecipes().subscribe();
+    this.dataStorageService.fetchShoppingList().subscribe(respond => {
+      console.log(respond);
+    });
   }
 
   onLogOut() {

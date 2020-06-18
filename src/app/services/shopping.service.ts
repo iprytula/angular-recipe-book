@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 export class ShoppingService {
   constructor() { }
 
-  ingridientsChanged = new Subject<Ingredient[]>();
+  ingredientsChanged = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
 
   private ingredients: Ingredient[] = [];
@@ -19,27 +19,31 @@ export class ShoppingService {
     return [...this.ingredients];
   }
 
+  setIngredients(ingredients): void {
+    this.ingredients = ingredients;
+    this.ingredientsChanged.next([...this.ingredients]);
+  }
+
   getIngredient(index: number): Ingredient {
     return this.ingredients[index];
   }
 
   addIngredient(newIngridient: Ingredient): void {
     this.ingredients.push(newIngridient);
-    this.ingridientsChanged.next([...this.ingredients]);
+    this.ingredientsChanged.next([...this.ingredients]);
   }
 
   editIngredient(index: number, editedIngredient: Ingredient) {
     this.ingredients[index] = editedIngredient;
-    this.ingridientsChanged.next([...this.ingredients]);
+    this.ingredientsChanged.next([...this.ingredients]);
   }
 
   deleteIngredient(index: number): void {
     this.ingredients.splice(index, 1);
-    this.ingridientsChanged.next([...this.ingredients]);
+    this.ingredientsChanged.next([...this.ingredients]);
   }
 
   recipeToShoppingList(recipe: Recipe): void {
-
     if (this.ingredients.length) {
       this.ingredients.forEach((ing, i) => {
         recipe.ingredients.forEach(nIng => {
@@ -58,7 +62,7 @@ export class ShoppingService {
       });
     } else {
       this.ingredients.push(...recipe.ingredients);
-      this.ingridientsChanged.next([...this.ingredients]);
+      this.ingredientsChanged.next([...this.ingredients]);
     }
   }
 

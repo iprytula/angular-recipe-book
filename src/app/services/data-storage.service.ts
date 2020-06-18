@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { RecipesService } from './recipes.service';
 import { Recipe } from 'src/app/models/recipe.model';
 import { AuthService } from './auth.service';
-import { Subject } from 'rxjs';
+import { Ingredient } from '../models/ingredient.model';
+import { ShoppingService } from './shopping.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,8 @@ export class DataStorageService {
   constructor(
     private http: HttpClient,
     private recipesService: RecipesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private shoppingService: ShoppingService
   ) { }
 
   storeRecipes() {
@@ -26,9 +29,10 @@ export class DataStorageService {
 
     this.inUseSubj.next(true);
     const recipes = this.recipesService.getRecipes();
-    this.http.put<Recipe[]>(`${this.dbUrl}/recipes.json?auth=${this.authService.user.token}`, recipes).subscribe(recipes => {
+    return this.http.put<Recipe[]>(`${this.dbUrl}/recipes.json?auth=${this.authService.user.token}`, recipes)
+    .pipe(tap(ingredients => {
       this.inUseSubj.next(false);
-    });
+    }));
   }
 
   fetchRecipes() {
@@ -41,6 +45,33 @@ export class DataStorageService {
       this.recipesService.setRecipes(recipes);
       this.inUseSubj.next(false);
     }))
+  }
+
+  storeShoppingList() {
+    if (!this.authService.user || !this.authService.user.token)
+      return;
+
+    const shoppingList: Ingredient[] = this.shoppingService.getIgredients();
+    this.inUseSubj.next(true);
+    return this.http.put(`${this.dbUrl}/shopping-list.json?auth=${this.authService.user.token}`,
+      {
+        [this.authService.user.id]: shoppingList
+      }
+    )
+    .pipe(tap(ingredients => {
+      this.inUseSubj.next(false);
+    }));
+  }
+
+  fetchShoppingList() {
+    if (!this.authService.user || !this.authService.user.token)
+      return;
+
+    this.inUseSubj.next(true);
+    return this.http.get<Ingredient[]>(`${this.dbUrl}/shopping-list.json?auth=${this.authService.user.token}`)
+    .pipe(tap(ingredients => {
+      this.shoppingService.setIngredients([...ingredients[this.authService.user.id]]);
+    }));
   }
 
 }

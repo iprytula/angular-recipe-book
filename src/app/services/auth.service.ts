@@ -25,6 +25,8 @@ export class AuthService {
   ) { }
 
   private _apiKey = 'AIzaSyCuWJvEJ6Q1d5N8h8S9XQsoo1WgdLiE6ww';
+
+  // change after tests
   user: User = null;
   userSubj = new Subject<User>();
 
