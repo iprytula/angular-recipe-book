@@ -29,7 +29,7 @@ export class DataStorageService {
 
     this.inUseSubj.next(true);
     const recipes = this.recipesService.getRecipes();
-    return this.http.put<Recipe[]>(`${this.dbUrl}/recipes.json?auth=${this.authService.user.token}`, recipes)
+    return this.http.put<Recipe[]>(`${this.dbUrl}/recipes.json`, recipes)
     .pipe(tap(ingredients => {
       this.inUseSubj.next(false);
     }));
@@ -40,11 +40,11 @@ export class DataStorageService {
       return;
 
     this.inUseSubj.next(true);
-    return this.http.get<Recipe[]>(`${this.dbUrl}/recipes.json?auth=${this.authService.user.token}`)
+    return this.http.get<Recipe[]>(`${this.dbUrl}/recipes.json`)
     .pipe(tap(recipes => {
       this.recipesService.setRecipes(recipes);
       this.inUseSubj.next(false);
-    }))
+    }));
   }
 
   storeShoppingList() {
@@ -53,7 +53,7 @@ export class DataStorageService {
 
     const shoppingList: Ingredient[] = this.shoppingService.getIgredients();
     this.inUseSubj.next(true);
-    return this.http.put(`${this.dbUrl}/shopping-list.json?auth=${this.authService.user.token}`,
+    return this.http.put(`${this.dbUrl}/shopping-list.json`,
       {
         [this.authService.user.id]: shoppingList
       }
@@ -68,7 +68,7 @@ export class DataStorageService {
       return;
 
     this.inUseSubj.next(true);
-    return this.http.get<Ingredient[]>(`${this.dbUrl}/shopping-list.json?auth=${this.authService.user.token}`)
+    return this.http.get<Ingredient[]>(`${this.dbUrl}/shopping-list.json`)
     .pipe(tap(ingredients => {
       this.shoppingService.setIngredients([...ingredients[this.authService.user.id]]);
     }));
