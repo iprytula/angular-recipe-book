@@ -4,6 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, Subject } from 'rxjs';
 
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   idToken: string,
@@ -21,7 +22,8 @@ export interface AuthResponseData {
 export class AuthService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   private _apiKey = 'AIzaSyCuWJvEJ6Q1d5N8h8S9XQsoo1WgdLiE6ww';
@@ -59,6 +61,7 @@ export class AuthService {
   logOut() {
     this.user = null;
     this.userSubj.next(this.user);
+    this.router.navigate(['/auth']);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
