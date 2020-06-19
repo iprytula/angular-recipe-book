@@ -70,7 +70,10 @@ export class DataStorageService {
     this.inUseSubj.next(true);
     return this.http.get<Ingredient[]>(`${this.dbUrl}/shopping-list.json`)
     .pipe(tap(ingredients => {
-      this.shoppingService.setIngredients([...ingredients[this.authService.user.id]]);
+      if (ingredients) {
+        this.shoppingService.setIngredients([...ingredients[this.authService.user.id]]);
+      }
+      this.inUseSubj.next(false);
     }));
   }
 

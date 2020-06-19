@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { throwError, Subject } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
@@ -28,9 +28,8 @@ export class AuthService {
 
   private _apiKey = 'AIzaSyCuWJvEJ6Q1d5N8h8S9XQsoo1WgdLiE6ww';
 
-  // change after tests
   user: User = null;
-  userSubj = new Subject<User>();
+  userSubj = new BehaviorSubject<User>(null);
 
   signUp(email, password) {
     return this.http.post<AuthResponseData>(
@@ -64,6 +63,25 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
+  autoLogIn(): boolean {
+    const userData: {
+      email: string,
+      id: string,
+      _token: string,
+      _tokenExpirationDate: string
+    } = JSON.parse(localStorage.getItem('userData'));
+
+    if (!userData) return false;
+
+    const newUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+
+    if (newUser.token !== null) {
+      this.user = newUser;
+      this.userSubj.next(this.user);
+      return true;
+    }
+  }
+
   private handleError(errorRes: HttpErrorResponse) {
     {
       let errorMessage = 'An unknown error occured!';
@@ -89,8 +107,14 @@ export class AuthService {
 
   private handleAuthentication(email: string, id: string, token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    this.user = new User(email, id, token, expirationDate);
-    this.userSubj.next(this.user);
+    const newUser = new User(email, id, token, expirationDate);
+
+    if (newUser !== null) {
+      this.user = newUser;
+      this.userSubj.next(this.user);
+    }
+
+    localStorage.setItem('userData', JSON.stringify(this.user));
   }
 
 }
