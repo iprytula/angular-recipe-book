@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { Ingredient } from 'src/app/models/ingredient.model';
-import { DataStorageService } from '../data-storage.service';
-import { ShoppingService } from '../shopping.service';
+import { DataStorageService } from '../../services/data-storage.service';
+import { ShoppingService } from '../../services/shopping.service';
 
 @Injectable({
   providedIn: 'root'
