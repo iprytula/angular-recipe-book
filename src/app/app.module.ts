@@ -19,6 +19,7 @@ import { RecipeStartComponent } from './components/recipe-start/recipe-start.com
 import { AuthComponent } from './components/auth/auth.component';
 import { SpinnerComponent } from './components/layout/spinner/spinner.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AlertComponent } from './components/layout/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     RecipeEditComponent,
     RecipeStartComponent,
     AuthComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
