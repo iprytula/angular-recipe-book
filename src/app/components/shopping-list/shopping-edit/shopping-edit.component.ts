@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 
 import { Ingredient } from "src/app/models/ingredient.model";
 
-import { ShoppingService } from "../../services/shopping.service";
+import { ShoppingService } from "../../../services/shopping.service";
 import { NgForm } from "@angular/forms";
 import { Subscription } from 'rxjs';
 
