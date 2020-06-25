@@ -14,7 +14,8 @@ import { AlertComponent } from './alert/alert.component';
   ],
   exports: [
     SpinnerComponent,
-    AlertComponent
+    AlertComponent,
+    CommonModule
   ]
 })
 export class SharedModule { }
