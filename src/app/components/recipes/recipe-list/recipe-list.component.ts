@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { RecipesService } from '../../services/recipes.service';
+import { RecipesService } from '../../../services/recipes.service';
 
-import { Recipe } from '../../models/recipe.model';
+import { Recipe } from '../../../models/recipe.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 

@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { RecipesComponent } from './recipes/recipes.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
-import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
-import { RecipeStartComponent } from './recipe-start/recipe-start.component';
-import { RecipesResolverService } from './recipes/recipes-resolver.service';
-import { AuthComponent } from './auth/auth.component';
-import { ShoppingListResolverService } from './shopping-list/shopping-list-resolver.service';
-import { AuthGuard } from './auth/auth.guard';
+import { RecipesComponent } from './components/recipes/recipes.component';
+import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
+import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe-detail.component';
+import { RecipeEditComponent } from './components/recipes/recipe-edit/recipe-edit.component';
+import { RecipeStartComponent } from './components/recipes/recipe-start/recipe-start.component';
+import { RecipesResolverService } from './components/recipes/recipes-resolver.service';
+import { AuthComponent } from './components/auth/auth.component';
+import { ShoppingListResolverService } from './components/shopping-list/shopping-list-resolver.service';
+import { AuthGuard } from './components/auth/auth.guard';
 
 const appRoutes: Routes = [
   {

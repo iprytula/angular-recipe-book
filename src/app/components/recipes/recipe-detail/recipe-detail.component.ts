@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { RecipesService } from '../../services/recipes.service';
-import { ShoppingService } from '../../services/shopping.service';
+import { RecipesService } from '../../../services/recipes.service';
+import { ShoppingService } from '../../../services/shopping.service';
 
-import { Recipe } from '../../models/recipe.model';
+import { Recipe } from '../../../models/recipe.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

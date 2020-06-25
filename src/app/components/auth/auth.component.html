@@ -1,8 +1,13 @@
 <div class="row">
   <div class="col-md-6 offset-md-3">
-    <div *ngIf="error.length !== 0" class="alert alert-danger">
+    <!-- <div *ngIf="error.length !== 0" class="alert alert-danger">
       <p>{{ error }}</p>
-    </div>
+    </div> -->
+    <app-alert
+      *ngIf="error.length !== 0"
+      [message]="error"
+      (close)="onHandleError()"
+    ></app-alert>
     <div
       *ngIf="isLoading"
       [ngStyle]="{
@@ -10,7 +15,7 @@
         paddingTop: '60px'
       }"
       >
-      <app-spinner></app-spinner>
+      <!-- <app-spinner></app-spinner> -->
     </div>
     <form *ngIf="!isLoading" (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
