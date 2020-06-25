@@ -7,7 +7,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
-import { DropdownDirective } from './directives/dropdown.directive';
 import { AuthComponent } from './components/auth/auth.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RecipesModule } from './components/recipes/recipes.module';
@@ -19,7 +18,6 @@ import { SharedModule } from './components/shared/shared.module';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    DropdownDirective,
     AuthComponent,
   ],
   imports: [
