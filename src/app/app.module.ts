@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -23,7 +23,6 @@ import { SharedModule } from './components/shared/shared.module';
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     RecipesModule,

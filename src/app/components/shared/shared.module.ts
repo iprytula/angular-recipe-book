@@ -5,6 +5,7 @@ import { DropdownDirective } from 'src/app/directives/dropdown.directive';
 
 import { SpinnerComponent } from './spinner/spinner.component';
 import { AlertComponent } from './alert/alert.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
