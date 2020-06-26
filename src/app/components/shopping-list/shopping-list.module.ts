@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 import { ShoppingListComponent } from '../shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from '../shopping-list/shopping-edit/shopping-edit.component';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
+
+const routes: Routes = [
+  { path: '', component: ShoppingListComponent }
+];
 
 @NgModule({
   declarations: [
@@ -13,7 +17,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     FormsModule,
-    RouterModule,
+    RouterModule.forChild(routes),
     SharedModule
   ],
   exports: [

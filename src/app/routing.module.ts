@@ -2,11 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { RecipesComponent } from './components/recipes/recipes.component';
-import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
-import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe-detail.component';
-import { RecipeEditComponent } from './components/recipes/recipe-edit/recipe-edit.component';
-import { RecipeStartComponent } from './components/recipes/recipe-start/recipe-start.component';
 import { RecipesResolverService } from './components/recipes/recipes-resolver.service';
+import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { ShoppingListResolverService } from './components/shopping-list/shopping-list-resolver.service';
 import { AuthGuard } from './components/auth/auth.guard';
@@ -22,17 +19,12 @@ const appRoutes: Routes = [
     component: RecipesComponent,
     canActivate: [ AuthGuard ],
     resolve: [ RecipesResolverService ],
-    children: [
-      { path: '', component: RecipeStartComponent },
-      { path: 'new', component: RecipeEditComponent },
-      { path: ':index', component: RecipeDetailComponent },
-      { path: ':index/edit', component: RecipeEditComponent }
-    ]
+    loadChildren: () => import('./components/recipes/recipes.module').then(m => m.RecipesModule),
   },
   {
     path: 'shopping-list',
     resolve: [ ShoppingListResolverService ],
-    component: ShoppingListComponent
+    loadChildren: () => import('./components/shopping-list/shopping-list.module').then(m => m.ShoppingListModule),
   },
   {
     path: 'auth',
