@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
@@ -26,7 +27,6 @@ export class AuthService {
     private router: Router
   ) { }
 
-  private _apiKey = 'AIzaSyCuWJvEJ6Q1d5N8h8S9XQsoo1WgdLiE6ww';
   private tokenExpirationTimer: any;
 
   user: User = null;
@@ -34,7 +34,7 @@ export class AuthService {
 
   signUp(email, password) {
     return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this._apiKey}`,
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.apiKey}`,
       {
         email: email,
         password: password,
@@ -47,7 +47,7 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this._apiKey}`,
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
       {
         email: email,
         password: password,

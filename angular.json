@@ -64,6 +64,9 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "es5": {
+              "tsConfig": "./tsconfig.es5.json"
             }
           }
         },
@@ -75,6 +78,9 @@
           "configurations": {
             "production": {
               "browserTarget": "rececipe-book:build:production"
+            },
+            "es5": {
+              "browserTarget": "rececipe-book:build:es5"
             }
           }
         },
