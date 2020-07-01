@@ -17,6 +17,7 @@
         *ngFor="let ingredient of ingredients; let i = index"
         class="list-group-item"
         (click)="onEditItem(i)"
+        [@listItemAnimation]
       >
         {{ ingredient.name }} ({{ ingredient.amount }})
       </li>

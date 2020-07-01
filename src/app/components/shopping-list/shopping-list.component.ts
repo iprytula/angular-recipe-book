@@ -6,10 +6,13 @@ import { ShoppingService } from '../../services/shopping.service';
 import { Subscription } from 'rxjs';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 
+import { listItemAnimation } from 'src/app/animations';
+
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.scss']
+  styleUrls: ['./shopping-list.component.scss'],
+  animations: [ listItemAnimation ]
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[];
